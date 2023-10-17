@@ -1,11 +1,8 @@
 
-import { PoolConfig } from 'mariadb';
-import { IDBService, MariaDBService, TableDependencyPair} from './dbService';
+import { IDBService } from './dbService/dbService.interfaces';
 import { difference, keyBy } from 'lodash';
 import { GraphNode, topologicalSort } from './graphUtil';
-import { Injectable, Inject } from '@nestjs/common';
-import { POOL_CONFIG } from './config';
-
+import { Injectable } from '@nestjs/common';
 
 // look up from the table name to a list of possible primary key values for that table in the subset of data being exported
 export type ForeignKeyValuesLookup = { [entityName: string]: number[] }
@@ -32,12 +29,7 @@ export const DB_EXPORTER = "DB_EXPORTER";
 @Injectable()
 export class DbExporter {
 
-    private dbService: IDBService;
-
-    constructor(
-        @Inject(POOL_CONFIG)
-        dbConfig: PoolConfig) {
-        this.dbService = new MariaDBService(dbConfig)
+    constructor(private dbService: IDBService ) {
     }
 
     private async topoSortEntities(entities:ExportEntity[]) {

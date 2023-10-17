@@ -1,10 +1,8 @@
 
-import { PoolConfig } from 'mariadb';
-import { IDBService, MariaDBService } from './dbService';
+import { IDBService } from './dbService/dbService.interfaces';
 import { difference, keyBy } from 'lodash';
 import { GraphNode, topologicalSort } from './graphUtil';
-import { Injectable, Inject } from '@nestjs/common';
-import { POOL_CONFIG } from './config';
+import { Injectable } from '@nestjs/common';
 
 type FKValuesMap = {[tableName:string]:{[oldKey:string|number]:string|number}};
 type InsertErrorInfo = {tableName:string, rowData:any, exception:any};
@@ -13,11 +11,8 @@ export const DB_IMPORTER = "DB_IMPORTER";
 
 @Injectable()
 export class DBImporter {
-    private dbService: IDBService;
 
-    constructor(@Inject(POOL_CONFIG) dbConfig: PoolConfig) {
-        this.dbService = new MariaDBService(dbConfig)
-    }
+    constructor(private dbService: IDBService)  {}
 
     private async topoSortTables(tableNames:string[]) {
         const tableDependencyPairs = await this.dbService.tableDependencies(tableNames)

@@ -1,0 +1,453 @@
+{
+    "Tenant": [
+        {
+            "id": 1,
+            "title": "LabShare",
+            "tenantId":"ls",
+            "secrets": {
+                "jwks": [
+                    {
+                        "jwk": {
+                            "kty": "RSA",
+                            "kid": "nhcOOAMG2QV47KjDD5KRHiZaDkOA2E5yeNZKCJH8A4E",
+                            "use": "sig",
+                            "alg": "RS256",
+                            "e": "AQAB",
+                            "n": "t0M0U0eRYjp8gdxKNQFyWtzlaf1dtFHPzsNUH-sWBhNnu4tMsl4ryWkORxXrQDZePW7SqCOvr9m8M7N6zblt0-SdVT7059Um9iRUD7UNidQEETJjgfwN2Msb_1SAqEedMjVCCvZZO5n29P_-ibfnUe0rKyEvBCbyUM0pKyBKAAvrWsyb-XNJOSwkFESx-obNEDWW634iewWpAjf8iybBP5FuS7P-CcbJi9GXXpdcQbzCV7HHJECq89pvaKBYHRZwpAiPS33Cj3-8d3xsYCItCW9b-JgnzvFc6K5wbpL8_pnxoVkm0uSc8jiFwD0jb2fQfLdhtpqICau_B9QvYk-C3w",
+                            "d": "i_YjjEboXeDVHkij0_-a2pJCE8SRQBoLX5oGMapVU6aWXsFwffk178jwQpIW7R-Yscpl0EwQ7XiZJ9M3Qs8PdfjvwB8o47YC35G3MZfREyZ9RLT7ElbyLFRSuZpL-DlZcPMD0WN7mu1nko3AVGXDoOpFQddCFSW5gsRtYKZ0XbtxgqC7gir8o0JpQcW-2nKLXT-JeUv2vajqpMpOEsCCHwIgorU64a4mX8HXTTNQcKkk-3ojb-TznRS-58Sbh6cGgucWD8GvDMU9kk5-H1rhZ-rxTIPcRTUQ9x_V3469uV279NDPgEaHb1xGR2vsbrAvQEFBpVOcRq5xjZZkeqE4wQ",
+                            "p": "4nyrXfVWOc4xBQvVZlhliB_yAgdWIv64lUMbj2YQSpUJhaKQmQGQ71aBHb2pTYHMypYWfyz6f5DhM36EQjr7FVYkW4N6TrbDbL-R8o4eRqEucjTT3BQg1txv68Spim7rOUd2xx0fNhZAQx7vllx6VGP96FdUUJmsIZxwYlGYjic",
+                            "q": "zySegAWDLQKa-6isLWowTBRmU7nXGqA_shFe5w2RRdVpPjb9UBaBd7CTuk21_gj8xDzvrcyN5nijNIa5RgA1gyXi7cxFLAtek_iV6vKZ0VIImsGCqQQcfweOGPjb5bPQvHiBzpx5Rr_2mEBbtZGgGZXoqaQ79WKQTD02_GGPEIk",
+                            "dp": "bV_pXgGZt2a004wIbVlpBtjuhT5HwbSjLSnwSErwuSPKKmf8TnesJ3jt94_dD9oMLRVYHeh5vFsZ9kU118ol8QLdofgXe6XVMFI_SBSL2G4EQRDz8wchaMGhpwkdGwY_wDSbzsJojTUnqYJqD4HvbYuwVaC-zgG4V671svVWp-c",
+                            "dq": "C4VQ33PvCMjVT9vgv6HhT8nuqwdyBEQXZtL6gUVK6CRndxNd4V9vEfYbMUhzL87WKB_vgK4Y0lGxWhGIKnGGiGXKCknLKxjyyK4RwIB_t5mlat4KY1YcM6B68b6dlFf86w6UwaYIRLwWff9OWnnf-qxQxWaiAxLZTbQ147GVYGk",
+                            "qi": "gpw1U9Bn5brNj3awm-FP4JrYsjCoXWhbubPRQUTGv9_v3SA1NoTJnaymMrKopSDR5tYKjhf6sFwbYaePTjM53aE_UmczAkyymxkEvx_lXcWM2QX_ff5W8OtjOdWm2ZkGLSK2XvCrPm0VWIdUnGrK3T_QfhC47IjgnP2UWW5VaBY"
+                        },
+                        "expires": "2024-09-07T18:21:31.955Z"
+                    }
+                ],
+                "certificates": {
+                    "x509": [
+                        {
+                            "key": "-----BEGIN RSA PRIVATE KEY-----\r\nMIIEpAIBAAKCAQEAuHmQYR+2hjwwcMP2Xdx08q0SA1NnRucj5jIm6GLdWjYa1ce9\r\nOcbiBMIYSEliN2FMebmKp4b/nIGh29XyOhC1zl2Ny1dBONMi/MMwR+8/5fP5QJ88\r\nc1FomwbfcoCs6zqd3MjXX0ghMSMXGX98ZmbeSq/2iEMRyEB+bepyDG+8x69yMqw1\r\nnSAIET32ZxjcEXZdsgQSZRbTwlwzuT8L6yFH7EW89jJ1WJgA7dcp0/K7SOBGxNAz\r\nFipiEosW2lxnytQegXeoJ6BS1pl/+xObL2BbGPXdqF0qhtLTv0wvGDLB2b4HGE4Y\r\nDoFEprJhi9LtniyhulUqUYlaM9N8LTEu5D4Y/QIDAQABAoIBAB9tbmBtg634wRPk\r\n/qrc7PuO6puwcM7Of/ounxxGA4nj38x928nlDQpcesCN5/KhW+L87hc+U3u5Rfbq\r\nyvqDcEW5AHgc5Fqm9bX0FtyacNtfJh6RQj4vJ1AJ6rVaIJtugAhmGvL7mdQCM2Q/\r\nqNTVP5efxLNQIc5o1mEpaMafnpyyB9zBBwCyPiQlwCwgEIFTtsySfCRl6aD+WaBB\r\nNZpvCJT/bQkkEadXpNzSEuJDmrMTzi2lgtcbwcSSDUvV4FI26+bVt6uqTgRkV7sp\r\n24oPXCQ5H8RyY3pAcsSM1nmnmz9epyXX9xWpNYsTDTWXIv8mw18dQ70qRTVNgOe6\r\nt46e9uECgYEA6NgAkUerWVnrHP5shni/XEV7tsS8e97/3LNNgijtWTBuV+S900bh\r\neyC5tmsYt8Btg30kTaEQzmLw9cmL4puhMOWp8J9fftpL/JcgKoelyZV35dWm0GUp\r\n4vzDRPrNoWA25BFm0l2cjK/WvLU2tIWo75fBMdf+uQZOrQ+mUM45tIUCgYEAytIh\r\nzLHgSoIhnSHFnEENlPD2fdDedVqRZ+hqPRHpZAOKH73PF4YjecDCBH7IhRxlb3Ei\r\nRDsZa1Lh1J+oL1Y9uZa43PF5WtY1tdhY0KjyQgGSSH8WYS3KfB8EBMUMaubyRW6E\r\nG1mepL5TKkrIUxck60yjRHlP4KGuw5OuJfujGBkCgYEAhMCqSipXekD2+HfifiSX\r\nzc7bww+V+vXgYP9lgIE/GWuwbbI/vBacdevpliSnWhR/G8mcihn7j///K9M2SwO6\r\nOjum0Ua8VoG1cxTixPzDvBPY4RQX4Jbc88pytoBb/tbxVMTLH8M5f0i9oKecwf22\r\nnKuj/XwNgYYkEy1qAIYjhlUCgYAXqmM1PkAckYiYjBtBuzl5epBYZ+m9Kb8zr6PN\r\n0mw4Nk2EnKIwbX9wMnSxD5YYKhMP6NSFv5ucsUQWijaWp2p2YEbbyPVPCxWjTUY3\r\nuq7h0ssd2G5lEnHA/+F5KQDk7GOyhE2330IqmOadVbKAN4AgUIXwdHNEk7kPqwiz\r\n9+O06QKBgQDehnqi7TM04MnKOipO14zr+uHVQbvMxalOibWwjoHd9ENBy/WvMYOZ\r\n5YPW3BmyeCPRAEmFNE8aYRFnajkXMbyujAluFyBVLHWNU3P9joCqAjBgghtxHaKA\r\nj3AHtBGeCr1+BZgGlZtFXutAb5tIIctgfSgC46s8JPhTCCdrfiU4/A==\r\n-----END RSA PRIVATE KEY-----\r\n",
+                            "cert": "-----BEGIN CERTIFICATE-----\r\nMIIDYTCCAkmgAwIBAgIJJM1yqRGf6O8FMA0GCSqGSIb3DQEBCwUAMGMxFTATBgNV\r\nBAMTDGxhYnNoYXJlLm9yZzELMAkGA1UEBhMCVVMxEjAQBgNVBAcTCVJvY2t2aWxs\r\nZTELMAkGA1UECBMCTUQxDDAKBgNVBAoTA05JSDEOMAwGA1UECxMFTkNBVFMwHhcN\r\nMjMwOTA3MTgyMTMxWhcNMjgwOTA1MTgyMTMxWjBjMRUwEwYDVQQDEwxsYWJzaGFy\r\nZS5vcmcxCzAJBgNVBAYTAlVTMRIwEAYDVQQHEwlSb2NrdmlsbGUxCzAJBgNVBAgT\r\nAk1EMQwwCgYDVQQKEwNOSUgxDjAMBgNVBAsTBU5DQVRTMIIBIjANBgkqhkiG9w0B\r\nAQEFAAOCAQ8AMIIBCgKCAQEAuHmQYR+2hjwwcMP2Xdx08q0SA1NnRucj5jIm6GLd\r\nWjYa1ce9OcbiBMIYSEliN2FMebmKp4b/nIGh29XyOhC1zl2Ny1dBONMi/MMwR+8/\r\n5fP5QJ88c1FomwbfcoCs6zqd3MjXX0ghMSMXGX98ZmbeSq/2iEMRyEB+bepyDG+8\r\nx69yMqw1nSAIET32ZxjcEXZdsgQSZRbTwlwzuT8L6yFH7EW89jJ1WJgA7dcp0/K7\r\nSOBGxNAzFipiEosW2lxnytQegXeoJ6BS1pl/+xObL2BbGPXdqF0qhtLTv0wvGDLB\r\n2b4HGE4YDoFEprJhi9LtniyhulUqUYlaM9N8LTEu5D4Y/QIDAQABoxgwFjAUBgNV\r\nHREEDTALgglsb2NhbGhvc3QwDQYJKoZIhvcNAQELBQADggEBAIOM22AIG44qevBR\r\n4P+dbbLF8cJKIWnvO6XUK9t3Ed4FaPZsXW3/sa4IvkTbNH/fIm+NhltHK5054/L4\r\nBML3k81wD5gniXlHcM9lrL1srffdzyfqtm9VwJuFDZ6LHfc5b81uZrgUjde8VlfM\r\nugjx3EzBdRMqex+X4pxiCCwq+9gSEwEzGkqSl0qO1uMjlfTQ3X/9nngDQY3l1v3o\r\nDbC8CCb/VYFmZtHyHJ8HHWibFcqKDbnZQ3MtkCr8aa/zMDpkl4YQlGnJpIlr9UuU\r\nM/c+3Wzo6P1UDSx7TQtO6oQFXpYT5/HPmTDBYBcDzMuXa/wnv43F8RnnslpkiPhG\r\nOZSoLvc=\r\n-----END CERTIFICATE-----\r\n"
+                        }
+                    ]
+                },
+                "cookies": {
+                    "keys": [
+                        "B1UxFdMvbpeWUmKLuBM3rSSAdGHRm2WBzCgEOUjvgaqTx3TVRxpvxywHeXtZQQvpGGRuxPcnjLlHrnJZY4GWsCe4c5a3KOLoqg2n"
+                    ]
+                }
+            },
+            "tileConfig": null,
+            "settings": {},
+            "userAlertSettings": null,
+            "notification": null,
+            "emailSettings": {},
+            "emailSecrets": {},
+            "createdAt": "2023-09-07T18:21:31.000Z",
+            "createdByUserId": null,
+            "ownerUserId": null,
+            "visibility": "public",
+            "isArchived": 0,
+            "latestLogin": "2023-09-07T18:21:31.000Z",
+            "archivedDate": null,
+            "tenantStatus": "active",
+            "notificationExpirationDate": null,
+            "cookieConsentSettings": {
+                "cookieConsentEnabled": false,
+                "cookieConsentExpiryDays": 150,
+                "cookieConsentMessage": "We use cookies to ensure that you have the best experience on our website. If you continue to use this site we assume that you accept this.",
+                "bannerColor": "#2B373B",
+                "bannerTextColor": "#FFFFFF",
+                "buttonColor": "#e7db08",
+                "buttonTextColor": "#000000",
+                "buttonText": "Accept"
+            },
+            "archiveWarningDate": null
+        }
+    ],
+    "IdentityProvider": [
+        {
+            "id": 1,
+            "mfaType": null,
+            "mfaSettings": {},
+            "icon": null,
+            "sortOrder": null,
+            "verifyEmail": null,
+            "loginTooltip": null,
+            "issuer": "https://auth.nih.gov/affwebservices/public/wsfeddispatcher",
+            "externalSecretId": null,
+            "isShareable": null,
+            "isTrusted": 1
+        },
+        {
+            "id": 2,
+            "mfaType": null,
+            "mfaSettings": {},
+            "icon": null,
+            "sortOrder": null,
+            "verifyEmail": null,
+            "loginTooltip": null,
+            "issuer": "https://accounts.google.com",
+            "externalSecretId": null,
+            "isShareable": null,
+            "isTrusted": 1
+        }
+    ],
+    "User": [
+        {
+            "id": 1,
+            "created": "2023-09-07T22:21:31.000Z",
+            "updatedAt": "2023-09-07T22:21:48.000Z",
+            "lastLogin": "2023-09-07T18:21:48.000Z",
+            "username": "kenneth.payson@labshare.io",
+            "displayName": null,
+            "nickname": "",
+            "givenName": "",
+            "middleName": "",
+            "familyName": "",
+            "email": "kenneth.payson@labshare.io",
+            "provider": "google-oauth",
+            "identityIssuer": "https://accounts.google.com",
+            "picture": "https://lh3.googleusercontent.com/a-/AD_cMMQexmfgsE-Cgi0kkoO5MHInk6mPUkZOE2-wWQZtg4djAA=s96-c",
+            "totpSecret": null,
+            "strikeCount": null,
+            "lastStrike": null,
+            "lockedOut": null,
+            "emailVerified": null,
+            "externalGroups": [],
+            "_userProfileClaims": {
+                "email": "kenneth.payson@labshare.io",
+                "picture": "https://lh3.googleusercontent.com/a-/AD_cMMQexmfgsE-Cgi0kkoO5MHInk6mPUkZOE2-wWQZtg4djAA=s96-c",
+                "name": "",
+                "preferred_username": "kenneth.payson@labshare.io",
+                "given_name": "",
+                "family_name": "",
+                "middle_name": "",
+                "common_name": "",
+                "external_groups": [],
+                "upn": "kenneth.payson@labshare.io",
+                "username": "",
+                "nickname": "",
+                "company": "",
+                "department": "",
+                "amr": []
+            },
+            "_providerClaims": {
+                "id": "105239113157366571036",
+                "email": "kenneth.payson@labshare.io",
+                "verified_email": true,
+                "picture": "https://lh3.googleusercontent.com/a-/AD_cMMQexmfgsE-Cgi0kkoO5MHInk6mPUkZOE2-wWQZtg4djAA=s96-c",
+                "hd": "labshare.io"
+            },
+            "_customClaims": null,
+            "upn": "kenneth.payson@labshare.io",
+            "commonName": "",
+            "company": "",
+            "department": "",
+            "amr": [],
+            "isBlocked": 0,
+            "passwordHash": null,
+            "userStatus": "Active"
+        },
+        {
+            "id": 2,
+            "created": "2023-09-07T22:21:32.000Z",
+            "updatedAt": "2023-09-07T22:21:32.000Z",
+            "lastLogin": null,
+            "username": null,
+            "displayName": null,
+            "nickname": null,
+            "givenName": null,
+            "middleName": null,
+            "familyName": null,
+            "email": "kenneth.payson@nih.gov",
+            "provider": null,
+            "identityIssuer": "https://auth.nih.gov/affwebservices/public/wsfeddispatcher",
+            "picture": null,
+            "totpSecret": null,
+            "strikeCount": null,
+            "lastStrike": null,
+            "lockedOut": null,
+            "emailVerified": null,
+            "externalGroups": null,
+            "_userProfileClaims": null,
+            "_providerClaims": null,
+            "_customClaims": null,
+            "upn": null,
+            "commonName": null,
+            "company": null,
+            "department": null,
+            "amr": null,
+            "isBlocked": 0,
+            "passwordHash": null,
+            "userStatus": "Active"
+        },
+        {
+            "id" : 3,
+            "created" : "2023-08-15T01:54:22.000Z",
+            "updatedAt" : "2023-08-15T01:54:22.000Z",
+            "lastLogin" : null,
+            "username" : "performance@local.test",
+            "displayName" : null,
+            "name" : "",
+            "nickname" : "",
+            "givenName" : "",
+            "middleName" : null,
+            "familyName" : "",
+            "email" : "performance@local.test",
+            "provider" : null,
+            "identityIssuer" : "https:\/\/labshare.local",
+            "picture" : "",
+            "totpSecret" : null,
+            "strikeCount" : null,
+            "lastStrike" : null,
+            "lockedOut" : null,
+            "emailVerified" : null,
+            "externalGroups" : null,
+            "_userProfileClaims" : null,
+            "_providerClaims" : null,
+            "_customClaims" : null,
+            "upn" : null,
+            "commonName" : null,
+            "company" : null,
+            "department" : null,
+            "amr" : null,
+            "isBlocked" : 0,
+            "passwordHash" : "pbkdf2$10000$a323253261c20ec32f1029dc07aecafd9d39fffa8eb414d58a0da86c70b33f190dd991cfe2b63ad088def4b0f4fff45730600b6e946eaf8cb5ab38b4d1e889d7$1298c7f4635ab365c7580c31ebe84eec231139ad160a571e88d0a370adaac687d4cb952f4f1205e13b4b69857e611afce519cfa39855f1fda33b62da18b5cdb1",
+            "userStatus" : "Active"
+        }
+    ],
+    "TenantUser": [
+        {
+            "id" : 1,
+            "userId" : 1,
+            "tenantId" : 1
+        },
+        {
+            "id" : 1,
+            "userId" : 2,
+            "tenantId" : 1
+        },
+        {
+            "id" : 1,
+            "userId" : 3,
+            "tenantId" : 1
+        }
+    ],
+    "Client": [
+        {
+            "id": 1,
+            "clientId": "auth-ui",
+            "clientSecret": "c6272bf7-2a98-45fe-a191-37847c080bcf",
+            "name": "Auth UI",
+            "description": "LabShare Auth UI",
+            "config": {
+                "callbackUrls": [
+                    "http://localhost:8080"
+                ],
+                "logout": {
+                    "frontchannelLogout": {
+                        "enabled": false
+                    },
+                    "showLogoutPrompt": true
+                },
+                "grantTypes": [
+                    "implicit",
+                    "authorization_code"
+                ],
+                "responseTypes": [
+                    "code",
+                    "id_token token",
+                    "code id_token"
+                ],
+                "postLogoutRedirectUris": [
+                    "http://localhost:8080"
+                ],
+                "tokenEndpointAuthMethod": "none"
+            },
+            "loginEventSettings": null,
+            "metadata": null,
+            "clientUri": "",
+            "tenantId": 1,
+            "type": "native",
+            "createdOn": "2023-09-07T22:21:32.000Z",
+            "activeX509CertificateFingerprint": null,
+            "lastClientSecretUpdate": "2023-09-07T22:21:32.000Z",
+            "clientSecretExpirationHasBeenNotified": 0,
+            "notifyExpirationBeforeSeconds": "0",
+            "lastClientSecretExpirationNotifiedDate": null,
+            "supportsAccountLinking": 0,
+            "shouldUsePreviouslySelectedConnection": 0,
+            "secretLifetimeInDays": null,
+            "notifiedSamlCertExpiration": 0,
+            "notifiedSamlCertExpirationDate": "2023-09-07T18:21:32.000Z",
+            "customErrorSettings": {
+                "customErrorEnabled": false,
+                "customErrorTitle": "",
+                "customErrorMessage": "",
+                "customErrorTemplate": "",
+                "backgroundImage": []
+            },
+            "accessRequestTemplateId": null
+        },
+        {
+            "id": 2,
+            "clientId": "auth-cli",
+            "clientSecret": "3d41ff14-8d5c-4529-bf1b-36303fcd7497",
+            "name": "Auth CLI",
+            "description": "LabShare Auth CLI",
+            "config": {
+                "callbackUrls": [
+                    "http://localhost:5000"
+                ],
+                "logout": {
+                    "frontchannelLogout": {
+                        "enabled": true
+                    },
+                    "showLogoutPrompt": true
+                },
+                "grantTypes": [
+                    "client_credentials",
+                    "authorization_code",
+                    "refresh_token"
+                ],
+                "responseTypes": [
+                    "code"
+                ],
+                "postLogoutRedirectUris": [
+                    "http://localhost:5000"
+                ],
+                "tokenEndpointAuthMethod": "client_secret_post"
+            },
+            "loginEventSettings": null,
+            "metadata": null,
+            "clientUri": "",
+            "tenantId": 1,
+            "type": "native",
+            "createdOn": "2023-09-07T22:21:32.000Z",
+            "activeX509CertificateFingerprint": null,
+            "lastClientSecretUpdate": "2023-09-07T22:21:32.000Z",
+            "clientSecretExpirationHasBeenNotified": 0,
+            "notifyExpirationBeforeSeconds": "0",
+            "lastClientSecretExpirationNotifiedDate": null,
+            "supportsAccountLinking": 0,
+            "shouldUsePreviouslySelectedConnection": 0,
+            "secretLifetimeInDays": null,
+            "notifiedSamlCertExpiration": 0,
+            "notifiedSamlCertExpirationDate": "2023-09-07T18:21:32.000Z",
+            "customErrorSettings": {
+                "customErrorEnabled": false,
+                "customErrorTitle": "",
+                "customErrorMessage": "",
+                "customErrorTemplate": "",
+                "backgroundImage": []
+            },
+            "accessRequestTemplateId": null
+        },
+        {
+            "id": 3,
+            "clientId": "auth-user-portal-web",
+            "clientSecret": "b2a7896b-c5df-45ec-8388-a8a7f0bb7afe",
+            "name": "Auth User Portal Web",
+            "description": "LabShare Auth User Portal Web",
+            "config": {
+                "callbackUrls": [
+                    "https://localhost:4201"
+                ],
+                "logout": {
+                    "frontchannelLogout": {
+                        "enabled": true
+                    },
+                    "showLogoutPrompt": true
+                },
+                "grantTypes": [
+                    "authorization_code"
+                ],
+                "responseTypes": [
+                    "code"
+                ],
+                "postLogoutRedirectUris": [
+                    "https://localhost:4201"
+                ],
+                "tokenEndpointAuthMethod": "none"
+            },
+            "loginEventSettings": null,
+            "metadata": null,
+            "clientUri": "",
+            "tenantId": 1,
+            "type": "web",
+            "createdOn": "2023-09-07T22:21:32.000Z",
+            "activeX509CertificateFingerprint": null,
+            "lastClientSecretUpdate": "2023-09-07T22:21:32.000Z",
+            "clientSecretExpirationHasBeenNotified": 0,
+            "notifyExpirationBeforeSeconds": "0",
+            "lastClientSecretExpirationNotifiedDate": null,
+            "supportsAccountLinking": 0,
+            "shouldUsePreviouslySelectedConnection": 0,
+            "secretLifetimeInDays": null,
+            "notifiedSamlCertExpiration": 0,
+            "notifiedSamlCertExpirationDate": "2023-09-07T18:21:32.000Z",
+            "customErrorSettings": {
+                "customErrorEnabled": false,
+                "customErrorTitle": "",
+                "customErrorMessage": "",
+                "customErrorTemplate": "",
+                "backgroundImage": []
+            },
+            "accessRequestTemplateId": null
+        },
+        {
+            "id": 4,
+            "clientId": "auth-user-portal-native",
+            "clientSecret": "d9a798a2-2097-49a2-886c-c03d41392da9",
+            "name": "Auth User Portal Native",
+            "description": "LabShare Auth User Portal Native",
+            "config": {
+                "callbackUrls": [
+                    "https://localhost:4201"
+                ],
+                "logout": {
+                    "frontchannelLogout": {
+                        "enabled": true
+                    },
+                    "showLogoutPrompt": true
+                },
+                "grantTypes": [
+                    "authorization_code"
+                ],
+                "responseTypes": [
+                    "code"
+                ],
+                "postLogoutRedirectUris": [
+                    "https://localhost:4201"
+                ],
+                "tokenEndpointAuthMethod": "none"
+            },
+            "loginEventSettings": null,
+            "metadata": null,
+            "clientUri": "",
+            "tenantId": 1,
+            "type": "native",
+            "createdOn": "2023-09-07T22:21:32.000Z",
+            "activeX509CertificateFingerprint": null,
+            "lastClientSecretUpdate": "2023-09-07T22:21:32.000Z",
+            "clientSecretExpirationHasBeenNotified": 0,
+            "notifyExpirationBeforeSeconds": "0",
+            "lastClientSecretExpirationNotifiedDate": null,
+            "supportsAccountLinking": 0,
+            "shouldUsePreviouslySelectedConnection": 0,
+            "secretLifetimeInDays": null,
+            "notifiedSamlCertExpiration": 0,
+            "notifiedSamlCertExpirationDate": "2023-09-07T18:21:32.000Z",
+            "customErrorSettings": {
+                "customErrorEnabled": false,
+                "customErrorTitle": "",
+                "customErrorMessage": "",
+                "customErrorTemplate": "",
+                "backgroundImage": []
+            },
+            "accessRequestTemplateId": null
+        }
+    ]
+}

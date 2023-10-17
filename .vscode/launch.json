@@ -36,6 +36,17 @@
             "smartStep": true,
             "trace": true,
 
+          },
+
+          {
+            "name": "Debug Sequelize Migration",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/node_modules/.bin/sequelize",
+            "args": [
+              "db:migrate",
+              "--debug"
+            ]
           }
     ]
 }

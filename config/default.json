@@ -23,5 +23,24 @@
     },
 
     "dbExportPath":"/Users/kenpayson/documents/temp/labshare_export.json",
-    "perfTestSeedDataPath": "/Users/kenpayson/Documents/repos/auth-data-gen/perftest-setup-data.json"
+    "perfTestSeedDataPath": "/Users/kenpayson/Documents/repos/auth-data-gen/perftest-setup-data.json",
+
+    "perfTests": {
+        "authServer":"https://labshare-auth-dev-0.app.cloud.gov",
+        "username": "performance@local.test",
+        "password": "@labshare@",
+        "perfTestScriptPath": "/Users/kenpayson/Documents/repos/dbTools/db-tools-server/k6Script/auth-perf-test.js",
+        "k6Path": "/Users/kenpayson/go/bin/k6",
+        "reportOutputPath": "/Users/kenpayson/Documents/report.html"
+    },
+
+    "auth": {
+        "clientSecret":"91c4bd0e-b242-43df-a9f1-bd256aac5a39",
+        "client_id": "dbTools-client",
+        "issuer":"http://localhost:7007/_api/auth/ls",
+        "audience":"http://localhost:7007/_api/auth/ls",
+        "jwksUri": "http://localhost:7007/_api/auth/ls/.well-known/jwks.json",
+        "idTokenUrl": "http://localhost:7007/_api/auth/ls/oidc/token"
+    }
+
 }

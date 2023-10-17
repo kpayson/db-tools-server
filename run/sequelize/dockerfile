@@ -1,0 +1,36 @@
+# Dockerfile for Sequelize container
+FROM node:latest
+
+# Install the sequelize-cli package
+RUN npm install -g sequelize-cli
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the package.json and package-lock.json files
+COPY package*.json ./
+
+# Install the dependencies
+RUN npm install
+
+# Copy the Sequelize configuration file
+COPY config/ ./config/
+
+# Copy the Sequelize migration files
+COPY migrations/ ./migrations/
+
+COPY ./seeders ./seeders
+
+COPY ./seed-data.json ./seed-data.json
+
+# Copy the wait-for-it.sh script to the container
+ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /app/wait-for-it.sh
+
+# Make the wait-for-it.sh script executable
+RUN chmod +x /app/wait-for-it.sh
+
+# Start Sequelize
+#CMD ["npm", "start"]
+
+CMD sh -c 'npm start && tail -f /dev/null'
+

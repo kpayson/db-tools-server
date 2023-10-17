@@ -23,5 +23,17 @@
     },
 
     "dbExportPath":"/Users/kenpayson/documents/temp/labshare_export.json",
-    "perfTestSeedDataPath": "/Users/kenpayson/Documents/repos/auth-data-gen/perftest-setup-data.json"
+
+    "perfTests": {
+        "authServer":"http://localhost:7007",
+        "username": "performance@local.test",
+        "password": "@labshare@",
+        "perfTestScriptPath": "/Users/kenpayson/Documents/repos/auth-monorepo/packages/auth/test/integration/data-seed/auth-perf-test.js",
+        "k6Path": "/Users/kenpayson/go/bin/k6"
+    },
+
+
+    "auth": {
+        "clientSecret":"adljfaldflaj23234234"
+    }
 }

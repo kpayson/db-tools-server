@@ -1,0 +1,77 @@
+{
+  "databaseConnections": [
+    {
+      "name": "Labshare - local",
+      "dialect": "mariadb",
+      "host": "localhost",
+      "port": 3336,
+      "database": "labshare",
+      "username": "root",
+      "password": "",
+      "authServer": "http://localhost:7007"
+    },
+    {
+      "name": "Labshare - local - test",
+      "dialect": "mariadb",
+      "host": "localhost",
+      "port": 3308,
+      "database": "labshare",
+      "username": "root",
+      "password": "",
+      "authServer": "http://localhost:7007"
+    },
+    {
+      "name": "Cloudgov localhost",
+      "dialect": "mysql",
+      "host": "127.0.0.1",
+      "port": 63306,
+      "database": "labshare-0",
+      "username": "urxsv0iz9xh8s3la",
+      "password": "pozakt00x3ejpdtookdqvgnmh",
+      "authServer": "https://labshare-auth-dev-0.app.cloud.gov"
+    }
+  ],
+  "commandTemplates": [
+    {
+      "name": "k6PerformanceTest Html Report",
+      "template": "/Users/kenpayson/go/bin/k6 run -e TARGET_VUS={{targetVUS}} -e REPORT_OUTPUT_PATH=/Users/kenpayson/Documents/report.html -e AUTH_SERVER={{authServer}} -e USER_NAME={{username}} -e USER_PASSWORD={{password}} /Users/kenpayson/Documents/repos/dbTools/db-tools-server/k6Script/auth-perf-test.js",
+      "resultLocationType": "file",
+      "resultFilePath": "/Users/kenpayson/Documents/report.html",
+      "resultFileType": "html",
+      "parameters": [
+        {
+          "name": "targetVUS",
+          "dataType": "number",
+          "defaultValue": "1"
+        },
+        {
+          "name": "authServer",
+          "dataType": "string",
+          "defaultValue": "https://labshare-auth-dev-0.app.cloud.gov"
+        },
+        {
+          "name": "username",
+          "dataType": "string",
+          "defaultValue": "performance@local.test"
+        },
+        {
+          "name": "password",
+          "dataType": "string",
+          "defaultValue": "@labshare@"
+        }
+      ]
+    },
+    {
+      "name": "echoTest",
+      "template": "echo {{echoText}}",
+      "resultLocationType":"console",
+      "parameters": [
+        {
+          "name": "echoText",
+          "dataType": "string",
+          "defaultValue": "Hello World"
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,5 @@
-import {createPool, PoolConfig, Connection} from 'mariadb';
-import { IDBService, MariaDBService, TableDependencyPair, ColumnInfo} from './dbService';
-import { Inject } from '@nestjs/common';
-import { POOL_CONFIG } from './config';
+
+import { IDBService, ColumnInfo } from './dbService/dbService.interfaces';
 import { GraphNode, topologicalSort } from './graphUtil';
 import { keyBy } from 'lodash';
 
@@ -32,15 +30,7 @@ export const DB_SEEDER = "DB_SEEDER";
 
 export class DBSeeder {
 
-    private _connectionPromise: any = null;
-    private dbService: IDBService;
-
-    constructor(@Inject(POOL_CONFIG)
-    dbConfig: PoolConfig) {
-        const pool = createPool(dbConfig);
-        this._connectionPromise = pool.getConnection();
-        this.dbService = new MariaDBService(dbConfig)
-    }
+    constructor(private dbService: IDBService)  {}
 
     private pickRandomElement(array: any[]) {
         if (array.length === 0) {
@@ -80,8 +70,8 @@ export class DBSeeder {
 
       
     
-    private async generateInsertDataWithUniqueForeignKeys(entity: SeedEntity, count:number, connection: Connection) {
-        const foreignKeyValueSet = entity.foreignKeyValuesQuery ? await connection.query(entity.foreignKeyValuesQuery) : [];
+    private async generateInsertDataWithUniqueForeignKeys(entity: SeedEntity, count:number) {
+        const foreignKeyValueSet = entity.foreignKeyValuesQuery ? await this.dbService.select<any[]>(entity.foreignKeyValuesQuery) : [];
         const foreignKeyValueSetSorted = this.randomSort(foreignKeyValueSet);
         const insertData = [...Array(Math.min(count,foreignKeyValueSet.length)).keys()].map((i)=>{
             return entity.dataGen(foreignKeyValueSetSorted[i],i)
@@ -89,8 +79,8 @@ export class DBSeeder {
         return insertData;
     }
 
-    private async generateInsertDataWithRandomForeignKey(entity: SeedEntity, count:number, connection: Connection) {
-        const foreignKeyValueSet = entity.foreignKeyValuesQuery ? await connection.query(entity.foreignKeyValuesQuery) : [];
+    private async generateInsertDataWithRandomForeignKey(entity: SeedEntity, count:number) {
+        const foreignKeyValueSet = entity.foreignKeyValuesQuery ? await this.dbService.select<any[]>(entity.foreignKeyValuesQuery) : [];
         // const columns = this.dbService.tableColumns(entity.name);
 
         const insertData = [...Array(count).keys()].map((i)=>{
@@ -100,14 +90,14 @@ export class DBSeeder {
     }
     
 
-    private async seedEntity(entity: SeedEntity, count:number, connection: Connection) {
+    private async seedEntity(entity: SeedEntity, count:number) {
         console.log("entity="+entity.name)
         console.log(entity.foreignKeyValuesQuery );
-        const foreignKeyValueSet = entity.foreignKeyValuesQuery ? await connection.query(entity.foreignKeyValuesQuery) : [];
+        const foreignKeyValueSet = entity.foreignKeyValuesQuery ? await this.dbService.select<any[]>(entity.foreignKeyValuesQuery) : [];
 
         const insertData = entity.isManyToManyRelation ? 
-            await this.generateInsertDataWithUniqueForeignKeys(entity, count, connection) :
-            await this.generateInsertDataWithRandomForeignKey(entity, count, connection);
+            await this.generateInsertDataWithUniqueForeignKeys(entity, count) :
+            await this.generateInsertDataWithRandomForeignKey(entity, count);
 
         const insertFields = Object.keys(insertData[0]);
         const insertFieldList = insertFields.join(',');
@@ -115,7 +105,7 @@ export class DBSeeder {
         const insertQuery = `INSERT INTO \`${entity.name}\` (${insertFieldList}) Values(${valuePlaceHolderList})`;
         
         for(const row of insertData) {
-            const insertRes = await connection.query(insertQuery,Object.values(row));
+            const insertRes = await this.dbService.insert(insertQuery,Object.values(row))
             console.log(insertRes);
         }
 
@@ -123,23 +113,18 @@ export class DBSeeder {
     }
 
     public async truncAllTables(seedEntities: SeedEntity[]) {
-        const conn = await this._connectionPromise;
-        await conn.query("SET FOREIGN_KEY_CHECKS=0");
-        for(const entity of seedEntities) {
-            await conn.query("truncate `" + entity.name + "`");
-        }
-        await conn.query("SET FOREIGN_KEY_CHECKS=1");
+        const tables = seedEntities.map(x=>x.name);
+        await this.dbService.truncAllAllTables(tables);
     }
 
     public async seedDatabase(seedEntities: SeedEntity[], entityCounts: countDictionary) {
-        const connection = await this._connectionPromise;
 
         const sortedEntities = await this.topoSortEntities(seedEntities);
 
         for (const entity of sortedEntities) {
             try {
                 const count = entityCounts[entity.name] || 1;
-                await this.seedEntity(entity, count, connection); 
+                await this.seedEntity(entity, count); 
             }
             catch(e) {
                 console.error("Error seeding entity: " + entity.name)
