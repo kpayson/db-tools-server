@@ -1,8 +1,9 @@
 {
     "poolConfig":{
-        "host": "localhost",
+        "host": "my_sql",
         "port": 3306,
-        "database": "labshare",
+        "database": "dbTools",
+        "dialect": "mysql",
         "user": "root",
         "password": "",
         "connectionLimit": 5
@@ -18,12 +19,12 @@
     },
 
     "auth": {
-        "clientSecret":"xxx",
+        "clientSecret":"91c4bd0e-b242-43df-a9f1-bd256aac5a39",
         "client_id": "dbTools-client",
-        "issuer":"http://localhost:7007/_api/auth/ls",
-        "audience":"http://localhost:7007/_api/auth/ls",
-        "jwksUri": "http://localhost:7007/_api/auth/ls/.well-known/jwks.json",
-        "idTokenUrl": "http://localhost:7007/_api/auth/ls/oidc/token"
+        "issuer":"http://host.docker.internal:7007/_api/auth/ls",
+        "audience":"http://host.docker.internal:7007/_api/auth/ls",
+        "jwksUri": "http://host.docker.internal:7007/_api/auth/ls/.well-known/jwks.json",
+        "idTokenUrl": "http://host.docker.internal:7007/_api/auth/ls/oidc/token"
     }
 
 }

@@ -1,29 +1,13 @@
 {
     "poolConfig":{
         "host": "localhost",
-        "port": 3306,
-        "database": "labshare",
+        "port": 3336,
+        "dialect": "mysql",
+        "database": "dbTools",
         "user": "root",
-        "password": "",
+        "password": "root",
         "connectionLimit": 5
     },
-
-    "seedCounts": {
-        "Client": 30,
-        "Group": 30,
-        "GroupRole": 90,
-        "IdentityProvider": 20,
-        "Namespace":3,
-        "Permission": 30,
-        "Role": 30,
-        "RolePermission": 100,
-        "Tenant": 10,
-        "TenantUser": 35,
-        "User": 30
-    },
-
-    "dbExportPath":"/Users/kenpayson/documents/temp/labshare_export.json",
-    "perfTestSeedDataPath": "/Users/kenpayson/Documents/repos/auth-data-gen/perftest-setup-data.json",
 
     "perfTests": {
         "authServer":"https://labshare-auth-dev-0.app.cloud.gov",
@@ -44,3 +28,4 @@
     }
 
 }
+

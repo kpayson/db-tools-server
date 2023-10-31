@@ -4,7 +4,10 @@ import { DatabaseConnection } from './database-connection/database-connection.en
 import { CommandTemplate } from './command-template/command-template.entity';
 import { CommandTemplateParameter } from './command-template/command-template-parameter.entity';
 import { CommandRunResult } from './command-run-result/command-run-result.entity';
+import * as config from 'config';
+import { PoolConfig } from 'config/config-types';
 
+const {host, port, user, password, database, dialect} = config.get<PoolConfig>("poolConfig");
 
 export const databaseProviders = [
   {
@@ -13,12 +16,12 @@ export const databaseProviders = [
       const sequelize = new Sequelize({
         // dialect: 'sqlite',
         // storage: ':memory:', // Use an in-memory database
-        dialect: 'mariadb',
-        host: 'localhost',
-        port: 3306,
-        username: 'root',
-        password: '',
-        database: 'dbTools',
+        dialect: dialect,
+        host: host,
+        port: port,
+        username: user,
+        password: password,
+        database: database,
       });
 
       sequelize.addModels([
@@ -27,7 +30,7 @@ export const databaseProviders = [
         CommandTemplate, 
         CommandTemplateParameter, 
         CommandRunResult]);
-      await sequelize.sync({ force: false  });
+      await sequelize.sync({ force: false,   });
       return sequelize;
     },
   },

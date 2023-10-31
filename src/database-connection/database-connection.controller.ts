@@ -26,30 +26,37 @@ export class DatabaseConnectionController {
         const res = await this.databaseConnection.create({ 
             name: connection.name, 
             host: connection.host, 
-            port: connection.port, 
+            port: connection.port,
+            dialect: connection.dialect,
             database: connection.database,
             username: connection.username,
-            password: connection.password
+            password: connection.password,
+            authServer: connection.authServer
         });
         return res;
     }
 
     @Put(':id')
     async update(@Param('id') id: number, @Body() connection: DatabaseConnection): Promise<[affectedCount: number]> {
-        const res = await this.databaseConnection.update({ 
-            name: connection.name, 
-            host: connection.host, 
-            port: connection.port, 
-            database: connection.database,
-            username: connection.username,
-            password: connection.password
-        },
-            {
-                where: {
-                    lastName: null
-                }
-            });
-        return res;
+        try {
+            const res = await this.databaseConnection.update({ 
+                name: connection.name, 
+                host: connection.host, 
+                port: connection.port, 
+                database: connection.database,
+                username: connection.username,
+                password: connection.password
+            },
+                {
+                    where: {
+                        id: id
+                    }
+                });
+            return res;
+        }
+        catch(e) {
+            console.log(e);
+        }
     }
 
     @Delete(':id')

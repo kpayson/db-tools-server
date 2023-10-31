@@ -1,6 +1,8 @@
+import { Dialect } from 'sequelize';
 export interface PoolConfig {
     host: string,
     port: number,
+    dialect: Dialect,
     database: string,
     user: string,
     password: string,

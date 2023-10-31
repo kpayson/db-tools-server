@@ -2,7 +2,7 @@ import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
 export const DATABASE_CONNECTION_REPOSITORY = "DATABASE_CONNECTION_REPOSITORY";
 
-@Table({timestamps:false})
+@Table({timestamps:false, freezeTableName: true })
 export class DatabaseConnection extends Model
 {
     @Column({

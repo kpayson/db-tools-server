@@ -16,7 +16,7 @@ import { COMMAND_TEMPLATE_PARAMETER_REPOSITORY, CommandTemplateParameter} from '
 
 import { PerfTestResultProviders } from './perf-test/perf-test-result.providers';
 import { COMMAND_RUN_RESULT_REPOSITORY,CommandRunResult } from './command-run-result/command-run-result.entity';
-import { AuthApiModule } from './auth-api.module';
+//import { AuthApiModule } from './auth-api.module';
 //import { AuthModule } from './auth/auth.module';
 //import { AuthApiService } from './auth-api.service';
 import { SETTING_OPTIONS } from './common/shared/constants';
@@ -29,10 +29,10 @@ import { JwtService } from '@nestjs/jwt';
 //   "issuer":"http://localhost:70007"
 // }
 
-const issuer = config.get<string>("auth.issuer");
-const audience = config.get<string>("auth.audience");
-const jwksUri = config.get<string>("auth.jwksUri");
-const idTokenUrl = config.get<string>("auth.idTokenUrl");
+// const issuer = config.get<string>("auth.issuer");
+// const audience = config.get<string>("auth.audience");
+// const jwksUri = config.get<string>("auth.jwksUri");
+// const idTokenUrl = config.get<string>("auth.idTokenUrl");
 @Module({
   imports: [
     DatabaseModule,     

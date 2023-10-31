@@ -7,7 +7,7 @@ ENV MYSQL_ROOT_PASSWORD=root
 # Copy the SQL script to create the database schema
 COPY schema.sql /docker-entrypoint-initdb.d/
 
-# Expose port 3306
+# Expose port 3336
 EXPOSE 3336
 
 # Start MySQL

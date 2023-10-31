@@ -3,7 +3,7 @@ import { CommandTemplate } from './command-template.entity';
 
 export const COMMAND_TEMPLATE_PARAMETER_REPOSITORY = "COMMAND_TEMPLATE_PARAMETER_REPOSITORY";
 
-@Table({ timestamps: false })
+@Table({ timestamps: false, freezeTableName: true  })
 export class CommandTemplateParameter extends Model {
     @Column({
         type: DataType.INTEGER,

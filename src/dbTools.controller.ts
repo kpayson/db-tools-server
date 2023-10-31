@@ -31,7 +31,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-@ApiBearerAuth()
+// @ApiBearerAuth()
 @ApiTags('dbTools')
 @Controller('dbTools')
 export class DBToolsController {
@@ -100,10 +100,16 @@ export class DBToolsController {
 
   @Get("Tables")
   async getTables(@Query('connectionId') connectionId: number =1 ) {
-    const dbService = await this.getDBService(connectionId);
-    const res = await dbService.tables();
-    console.log('res');
-    return res;
+    try {
+      const dbService = await this.getDBService(connectionId);
+      const res = await dbService.tables();
+      console.log('res');
+      return res;
+    }
+    catch (err) {
+      console.log(err);
+    }
+
   }
 
   @Get("TableData/:tableName")

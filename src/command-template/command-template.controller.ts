@@ -25,6 +25,51 @@ export class CommandTemplatesController {
         return res;
     }
 
+    @Post()
+    async create(@Body() template: CommandTemplate): Promise<CommandTemplate> {
+        const res = await this.commandTemplate.create({ 
+            name: template.name, 
+            template: template.template, 
+            resultLocationType: template.resultLocationType,
+            resultFilePath: template.resultFilePath,
+            resultFileType: template.resultFileType,
+            parameters: template.parameters
+        },{include:[{model:CommandTemplateParameter, as:'parameters'}]});
+
+        return res;
+    }
+
+    @Put(':id')
+    async update(@Param('id') id: number, @Body() template: CommandTemplate): Promise<[affectedCount: number]> {
+        try {
+            const res = await this.commandTemplate.update({ 
+                name: template.name, 
+                template: template.template, 
+                resultLocationType: template.resultLocationType,
+                resultFilePath: template.resultFilePath,
+                resultFileType: template.resultFileType,
+                //parameters: template.parameters
+            },
+                {
+                    where: {
+                        id: id
+                    }
+                });
+            // const parameters = await this.commandTemplate.p
+            //CommandTemplateParameter.findAll({where:{commandTemplateId:id}});
+            return res;
+        }
+        catch(e) {
+            console.log(e);
+        }
+    }
+
+    @Delete(':id')
+    async destroy(@Param('id') id: number): Promise<number> {
+        const res = await this.commandTemplate.destroy({ where: { id } });
+        return res;
+    }
+
     @Get(':id/parameters')
     async findTemplateParameters(@Param('id') id: number): Promise<CommandTemplateParameter[]> {
         const res = await CommandTemplateParameter.findAll({where:{commandTemplateId:id}});

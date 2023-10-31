@@ -3,7 +3,7 @@ import { CommandTemplate } from '../command-template/command-template.entity';
 
 export const COMMAND_RUN_RESULT_REPOSITORY = "COMMAND_RUN_RESULT_REPOSITORY";
 
-@Table({ timestamps: false })
+@Table({ timestamps: false, freezeTableName: true  })
 export class 
 CommandRunResult extends Model {
   @Column({

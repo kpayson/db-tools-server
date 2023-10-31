@@ -1,6 +1,6 @@
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
 
-@Table({ timestamps: false })
+@Table({ timestamps: false, freezeTableName: true  })
 export class PerfTestResult extends Model {
   @Column({
     type: DataType.INTEGER,

@@ -4,7 +4,7 @@
       "name": "Labshare - local",
       "dialect": "mariadb",
       "host": "localhost",
-      "port": 3336,
+      "port": 3306,
       "database": "labshare",
       "username": "root",
       "password": "",

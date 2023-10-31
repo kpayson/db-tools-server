@@ -12,7 +12,14 @@ module.exports = {
         primaryKey: true, 
       },
       commandTemplateId: {
-        type:DataType.INTEGER
+        type:DataType.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'CommandTemplate',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       name: {
         type: DataType.STRING,
