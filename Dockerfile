@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as a parent image
-FROM node:20-alpine
+FROM node:20
 
 # Set the NODE_ENV environment variable to production to match the production settings in config.json
 ENV NODE_ENV=production
@@ -25,11 +25,12 @@ ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.s
 # Make the wait-for-it.sh script executable
 RUN chmod +x /app/wait-for-it.sh
 
-RUN apk update && apk add netcat-openbsd
+RUN apt-get update && apt-get install -y netcat-openbsd
 
 # Expose port 3000 for the application
 EXPOSE 3000
 
 # Start the application
-CMD ["npm", "run", "start:prod"]
-# CMD sh -c 'tail -f /dev/null'
+CMD ["npm", "run", "start"]
+# CMD ["npm", "run", "start:prod"]
+#CMD sh -c 'tail -f /dev/null'

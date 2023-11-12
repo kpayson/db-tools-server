@@ -5,7 +5,7 @@
         "database": "dbTools",
         "dialect": "mysql",
         "user": "root",
-        "password": "",
+        "password": "root",
         "connectionLimit": 5
     },
 
