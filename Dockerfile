@@ -19,6 +19,7 @@ COPY . .
 # Build the application
 RUN npm run build
 
+
 # Copy the wait-for-it.sh script to the container
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /app/wait-for-it.sh
 
@@ -26,6 +27,8 @@ ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.s
 RUN chmod +x /app/wait-for-it.sh
 
 RUN apt-get update && apt-get install -y netcat-openbsd
+
+RUN apk add --no-cache bash
 
 # Expose port 3000 for the application
 EXPOSE 3000
