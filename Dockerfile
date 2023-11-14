@@ -28,12 +28,12 @@ RUN chmod +x /app/wait-for-it.sh
 
 RUN apt-get update && apt-get install -y netcat-openbsd
 
-RUN apk add --no-cache bash
+RUN apt-get install bash
 
 # Expose port 3000 for the application
 EXPOSE 3000
 
 # Start the application
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start:wait"]
 # CMD ["npm", "run", "start:prod"]
 #CMD sh -c 'tail -f /dev/null'
