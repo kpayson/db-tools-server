@@ -1,14 +1,16 @@
-import { Controller, Body, Get, Inject, Post, Param, Query, UseGuards  } from '@nestjs/common';
+import { Controller, Body, Get, Inject, Post, Param, Query, UseGuards, HttpException  } from '@nestjs/common';
 import { DbExporter, ExportEntity } from './lib/dbExporter';
 import { DBImporter, } from './lib/dbImporter';
 import { IDBService} from './lib/dbService/dbService.interfaces';
 import { MySqlService } from './lib/dbService/mysql.service';
 import { DBSeeder } from './lib/dbSeeder';
 import { DatabaseConnection, DATABASE_CONNECTION_REPOSITORY } from './database-connection/database-connection.entity';
+import { CustomView, CUSTOM_VIEW_REPOSITORY } from './custom-view/custom-view.entity';
 // import { AuthGuard } from '@nestjs/passport';
 //import { JwtAuthGuard } from './auth/jwt-auth.guard';
 //import { AuthGuard} from './guards/auth.guard';
 import { AuthGuard } from './nest-auth/auth.guard';
+import { SqlParserService } from './sql-parser/sql-parser.service';
 
 import {
   clientEntity,
@@ -37,9 +39,13 @@ import {
 export class DBToolsController {
   constructor(
     @Inject(DATABASE_CONNECTION_REPOSITORY)
-    private readonly connectionRepo: typeof DatabaseConnection
+    private readonly connectionRepo: typeof DatabaseConnection,
 
-    ) { }
+    @Inject(CUSTOM_VIEW_REPOSITORY)
+    private readonly customViewRepo: typeof CustomView,
+
+    private readonly sqlParserService: SqlParserService
+  ) { }
 
   private fixForJsonSerialization(obj: any): any {
     // toString any bigint values to prevent any json serialization errors
@@ -200,6 +206,40 @@ export class DBToolsController {
     
       console.log(`stdout:\n${stdout}`);
     });
+  }
+
+//   private replaceQueryVariablesWithQuestionMark(query: string): string {
+//     return query.replace(/@\w+/g, '?');
+// }
+
+  private extractVariables(query: string): string[] {
+    const matches = query.match(/@\w+/g);
+    return matches ? matches.map(variable => variable.slice(1)) : [];
+  }
+
+
+  @Post("RunCustomView")
+  async customView(@Body() customViewInfo: any, @Query('connectionId') connectionId: number = 1) {
+    try {
+      const customViewId = customViewInfo.customViewId;
+      const paramValuesObj = customViewInfo.params;
+      const customView = await this.customViewRepo.findByPk(customViewId);
+      const paramVariables = this.extractVariables(customView.viewSql);
+      const paramsValueArray = paramVariables.map(variable => paramValuesObj[variable])
+      //.map(x=>!isNaN(x - 0) ? Number(x) : x);
+      const dbService = await this.getDBService(connectionId);
+
+      const parseRes = this.sqlParserService.parseSelect(customView.viewSql);
+      const viewSql = customView.viewSql.replace(/@\w+/g, '?');
+      const viewData = await dbService.select(viewSql, paramsValueArray);
+
+      return viewData;
+
+    } catch (err) {
+      console.log(err);
+      throw new HttpException("Error running custom view", 500);
+
+    }
   }
 }
 

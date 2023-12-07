@@ -6,11 +6,15 @@ import { AppGateway } from 'app.gateway';
 import { PerfTestService } from './perf-test/perf-test-runner.service';
 import { DatabaseModule } from './database.module';
 import { DatabaseConnectionController } from './database-connection/database-connection.controller';
+import { CustomViewController } from './custom-view/custom-view.controller';
 import { PerfTestResultController } from './perf-test/perf-test.controller';
 import { CommandTemplatesController } from './command-template/command-template.controller';
-import { CommandRunResultsController } from './command-run-result/command-run-results.controller'
+import { CommandRunResultsController } from './command-run-result/command-run-results.controller';
+
 
 import { DATABASE_CONNECTION_REPOSITORY, DatabaseConnection } from './database-connection/database-connection.entity';
+import { CUSTOM_VIEW_REPOSITORY, CustomView } from './custom-view/custom-view.entity';
+import { CUSTOM_VIEW_PARAMETER_REPOSITORY, CustomViewParameter } from './custom-view/custom-view-parameter.entity';
 import { COMMAND_TEMPLATE_REPOSITORY,CommandTemplate } from './command-template/command-template.entity';
 import { COMMAND_TEMPLATE_PARAMETER_REPOSITORY, CommandTemplateParameter} from './command-template/command-template-parameter.entity';
 
@@ -21,6 +25,7 @@ import { COMMAND_RUN_RESULT_REPOSITORY,CommandRunResult } from './command-run-re
 //import { AuthApiService } from './auth-api.service';
 import { SETTING_OPTIONS } from './common/shared/constants';
 import { JwtService } from '@nestjs/jwt';
+import { SqlParserService } from './sql-parser/sql-parser.service';
 
 
 
@@ -50,7 +55,8 @@ import { JwtService } from '@nestjs/jwt';
 ], //, AuthModule
   controllers: [
     DBToolsController, 
-    DatabaseConnectionController, 
+    DatabaseConnectionController,
+    CustomViewController, 
     PerfTestResultController, 
     CommandTemplatesController,
     CommandRunResultsController  ],
@@ -60,12 +66,15 @@ import { JwtService } from '@nestjs/jwt';
     {provide: SETTING_OPTIONS,useValue: {}},
     {provide:POOL_CONFIG, useFactory: ()=>config.get("poolConfig")},
     {provide:DATABASE_CONNECTION_REPOSITORY, useValue: DatabaseConnection},
+    {provide:CUSTOM_VIEW_REPOSITORY, useValue: CustomView},
+    {provide: CUSTOM_VIEW_PARAMETER_REPOSITORY, useValue: CustomViewParameter},
     {provide:COMMAND_TEMPLATE_REPOSITORY, useValue: CommandTemplate},
     {provide:COMMAND_TEMPLATE_PARAMETER_REPOSITORY, useValue: CommandTemplateParameter},
     {provide:COMMAND_RUN_RESULT_REPOSITORY, useValue: CommandRunResult},
     ...PerfTestResultProviders,
     PerfTestService,
-    JwtService
+    JwtService,
+    SqlParserService
   ],
 })
 export class AppModule {}

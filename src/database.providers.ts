@@ -4,8 +4,11 @@ import { DatabaseConnection } from './database-connection/database-connection.en
 import { CommandTemplate } from './command-template/command-template.entity';
 import { CommandTemplateParameter } from './command-template/command-template-parameter.entity';
 import { CommandRunResult } from './command-run-result/command-run-result.entity';
+import { CustomView } from './custom-view/custom-view.entity';
+import { CustomViewParameter } from './custom-view/custom-view-parameter.entity';
 import * as config from 'config';
 import { PoolConfig } from 'config/config-types';
+
 
 const {host, port, user, password, database, dialect} = config.get<PoolConfig>("poolConfig");
 
@@ -29,7 +32,9 @@ export const databaseProviders = [
         DatabaseConnection, 
         CommandTemplate, 
         CommandTemplateParameter, 
-        CommandRunResult]);
+        CommandRunResult,
+        CustomView,
+        CustomViewParameter]);
       await sequelize.sync({ force: false,   });
       return sequelize;
     },

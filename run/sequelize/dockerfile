@@ -24,7 +24,8 @@ COPY ./seeders ./seeders
 COPY ./seed-data.json ./seed-data.json
 
 # Copy the wait-for-it.sh script to the container
-ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /app/wait-for-it.sh
+# ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /app/wait-for-it.sh
+COPY ./wait-for-it.sh /app/wait-for-it.sh
 
 # Make the wait-for-it.sh script executable
 RUN chmod +x /app/wait-for-it.sh

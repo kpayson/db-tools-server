@@ -31,7 +31,7 @@ export interface TableInfo {
 export interface IDBService
 {
     // sql select query
-    select<T>(queryString:string): Promise<T>;
+    select<T>(queryString:string, values?: any[]): Promise<T>;
 
     // insert query
     insert(queryString: string, values:any[]): Promise<any> ;

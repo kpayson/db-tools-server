@@ -44,9 +44,10 @@ export class MySqlService implements IDBService {
         });
         return prom;
     }
-    select<T>(queryString: string): Promise<T> {
+
+    select<T>(queryString: string, values?: any[]): Promise<T> {
         const prom = new Promise<T>((resolve, reject) => {
-            this._pool.query(queryString, (error, results) => {
+            this._pool.query(queryString, values, (error, results) => {
                 if (!error) {
                     resolve(results)
                 }
