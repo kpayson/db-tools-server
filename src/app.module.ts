@@ -7,6 +7,7 @@ import { PerfTestService } from './perf-test/perf-test-runner.service';
 import { DatabaseModule } from './database.module';
 import { DatabaseConnectionController } from './database-connection/database-connection.controller';
 import { CustomViewController } from './custom-view/custom-view.controller';
+import { DataReportController } from './data-report/data-report.controller';
 import { PerfTestResultController } from './perf-test/perf-test.controller';
 import { CommandTemplatesController } from './command-template/command-template.controller';
 import { CommandRunResultsController } from './command-run-result/command-run-results.controller';
@@ -17,6 +18,8 @@ import { CUSTOM_VIEW_REPOSITORY, CustomView } from './custom-view/custom-view.en
 import { CUSTOM_VIEW_PARAMETER_REPOSITORY, CustomViewParameter } from './custom-view/custom-view-parameter.entity';
 import { COMMAND_TEMPLATE_REPOSITORY,CommandTemplate } from './command-template/command-template.entity';
 import { COMMAND_TEMPLATE_PARAMETER_REPOSITORY, CommandTemplateParameter} from './command-template/command-template-parameter.entity';
+import  { DATA_REPORT_REPOSITORY, DataReport } from './data-report/data-report.entity';
+import { DATA_REPORT_PARAMETER_REPOSITORY, DataReportParameter } from './data-report/data-report-parameter.entity';
 
 import { PerfTestResultProviders } from './perf-test/perf-test-result.providers';
 import { COMMAND_RUN_RESULT_REPOSITORY,CommandRunResult } from './command-run-result/command-run-result.entity';
@@ -26,6 +29,8 @@ import { COMMAND_RUN_RESULT_REPOSITORY,CommandRunResult } from './command-run-re
 import { SETTING_OPTIONS } from './common/shared/constants';
 import { JwtService } from '@nestjs/jwt';
 import { SqlParserService } from './sql-parser/sql-parser.service';
+
+
 
 
 
@@ -59,7 +64,8 @@ import { SqlParserService } from './sql-parser/sql-parser.service';
     CustomViewController, 
     PerfTestResultController, 
     CommandTemplatesController,
-    CommandRunResultsController  ],
+    CommandRunResultsController,
+    DataReportController  ],
   providers: [
     AppGateway,
     //AuthApiService,
@@ -71,6 +77,8 @@ import { SqlParserService } from './sql-parser/sql-parser.service';
     {provide:COMMAND_TEMPLATE_REPOSITORY, useValue: CommandTemplate},
     {provide:COMMAND_TEMPLATE_PARAMETER_REPOSITORY, useValue: CommandTemplateParameter},
     {provide:COMMAND_RUN_RESULT_REPOSITORY, useValue: CommandRunResult},
+    {provide:DATA_REPORT_REPOSITORY, useValue: DataReport},
+    {provide:DATA_REPORT_PARAMETER_REPOSITORY, useValue: DataReportParameter},
     ...PerfTestResultProviders,
     PerfTestService,
     JwtService,

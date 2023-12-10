@@ -1,5 +1,7 @@
 'use strict';
 
+var DataType = require('sequelize/lib/data-types');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {

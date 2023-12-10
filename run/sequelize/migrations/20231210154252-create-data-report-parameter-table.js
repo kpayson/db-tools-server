@@ -5,17 +5,17 @@ var DataType = require('sequelize/lib/data-types');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.createTable('CustomViewParameter', {
+    return queryInterface.createTable('DataReportParameter', {
       id: {
         type: DataType.INTEGER,
         autoIncrement: true,
         primaryKey: true, 
       },
-      customViewId: {
+      dataReportId: {
         type:DataType.INTEGER,
         allowNull: false,
         references: {
-          model: 'CustomView',
+          model: 'DataReport',
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -24,9 +24,9 @@ module.exports = {
       name: {
         type: DataType.STRING,
       },
-      dataType:{
-        type: DataType.STRING,
-      },
+      // dataType:{
+      //   type: DataType.STRING,
+      // },
       defaultValue: {
         type: DataType.STRING,
       },
@@ -43,3 +43,4 @@ module.exports = {
      */
   }
 };
+

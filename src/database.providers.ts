@@ -6,6 +6,8 @@ import { CommandTemplateParameter } from './command-template/command-template-pa
 import { CommandRunResult } from './command-run-result/command-run-result.entity';
 import { CustomView } from './custom-view/custom-view.entity';
 import { CustomViewParameter } from './custom-view/custom-view-parameter.entity';
+import { DataReport } from './data-report/data-report.entity';
+import { DataReportParameter } from './data-report/data-report-parameter.entity';
 import * as config from 'config';
 import { PoolConfig } from 'config/config-types';
 
@@ -34,7 +36,9 @@ export const databaseProviders = [
         CommandTemplateParameter, 
         CommandRunResult,
         CustomView,
-        CustomViewParameter]);
+        CustomViewParameter,
+        DataReport,
+        DataReportParameter]);
       await sequelize.sync({ force: false,   });
       return sequelize;
     },
