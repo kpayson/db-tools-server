@@ -29,6 +29,12 @@ export class CustomViewController {
         return res;
     }
 
+    @Get('/:id')
+    async findById(@Param('id') id: number): Promise<Partial<CustomView>> {
+        const res = await this.customView.findByPk(id, { include: [{ model: CustomViewParameter, as: 'parameters' }] });
+        return res;
+    }
+
 
     @Put(':id')
     async update(@Param('id') id: string, @Body() customView: CustomView): Promise<void> {

@@ -29,6 +29,12 @@ export class DataReportController {
         return res;
     }
 
+    @Get('/:id')
+    async findById(@Param('id') id: number): Promise<Partial<DataReport>> {
+        const res = await this.dataReport.findByPk(id, { include: [{ model: DataReportParameter, as: 'parameters' }] });
+        return res;
+    }
+
 
     @Put(':id')
     async update(@Param('id') id: string, @Body() dataReport: DataReport): Promise<void> {
