@@ -15,7 +15,8 @@ export class DataReportController {
         const res = await this. dataReport.create({
             name: dataReport.name,
             description: dataReport.description,
-            template: dataReport.reportTemplate,
+            reportTemplate: dataReport.reportTemplate,
+            customViewId: dataReport.customViewId,
             parameters: dataReport.parameters
         }, {
             include: [{ model: DataReportParameter, as: 'parameters' }]
@@ -42,7 +43,8 @@ export class DataReportController {
             {
                 name: dataReport.name,
                 description: dataReport.description,
-                template: dataReport.reportTemplate
+                reportTemplate: dataReport.reportTemplate,
+                customViewId: dataReport.customViewId
             },
             {
                 where: {

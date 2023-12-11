@@ -1,16 +1,18 @@
-import { Controller, Body, Get, Inject, Post, Param, Query, UseGuards, HttpException  } from '@nestjs/common';
+import { Controller, Body, Get, Inject, Post, Param, Query, UseGuards, HttpException, Header } from '@nestjs/common';
 import { DbExporter, ExportEntity } from './lib/dbExporter';
 import { DBImporter, } from './lib/dbImporter';
-import { IDBService} from './lib/dbService/dbService.interfaces';
+import { IDBService } from './lib/dbService/dbService.interfaces';
 import { MySqlService } from './lib/dbService/mysql.service';
 import { DBSeeder } from './lib/dbSeeder';
 import { DatabaseConnection, DATABASE_CONNECTION_REPOSITORY } from './database-connection/database-connection.entity';
 import { CustomView, CUSTOM_VIEW_REPOSITORY } from './custom-view/custom-view.entity';
+import { DataReport, DATA_REPORT_REPOSITORY } from './data-report/data-report.entity';
 // import { AuthGuard } from '@nestjs/passport';
 //import { JwtAuthGuard } from './auth/jwt-auth.guard';
 //import { AuthGuard} from './guards/auth.guard';
 import { AuthGuard } from './nest-auth/auth.guard';
 import { SqlParserService } from './sql-parser/sql-parser.service';
+import Handlebars from 'handlebars';
 
 import {
   clientEntity,
@@ -23,7 +25,8 @@ import {
   rolePermissionEntity,
   tenantEntity,
   tenantUserEntity,
-  userEntity} from './entity-generators'
+  userEntity
+} from './entity-generators'
 import { exec } from 'child_process';
 
 import {
@@ -43,6 +46,9 @@ export class DBToolsController {
 
     @Inject(CUSTOM_VIEW_REPOSITORY)
     private readonly customViewRepo: typeof CustomView,
+
+    @Inject(DATA_REPORT_REPOSITORY)
+    private readonly dataReportRepo: typeof DataReport,
 
     private readonly sqlParserService: SqlParserService
   ) { }
@@ -66,23 +72,23 @@ export class DBToolsController {
     return obj;
   }
 
-  private async getDBService(connectionId:number): Promise<IDBService> {
+  private async getDBService(connectionId: number): Promise<IDBService> {
     const connSettings = await this.connectionRepo.findByPk(connectionId);
     const poolConfig = {
       host: connSettings.host,
-      port: connSettings.port,            
+      port: connSettings.port,
       // host: 'cg-aws-broker-prodrj5hgmxlvrne7av.ci7nkegdizyy.us-gov-west-1.rds.amazonaws.com', //this._poolConfig.host, 
       // port: 3306, // this._poolConfig.port,
       database: connSettings.database,
       user: connSettings.username,
       password: connSettings.password,
-      connectionLimit:5
+      connectionLimit: 5
     };
-    if(connSettings.dialect === 'mariadb') {
+    if (connSettings.dialect === 'mariadb') {
       return new MySqlService(poolConfig);
       //return new MariaDBService(poolConfig);
     }
-    else if(connSettings.dialect === 'mysql') {
+    else if (connSettings.dialect === 'mysql') {
       return new MySqlService(poolConfig);
     }
     else {
@@ -105,7 +111,7 @@ export class DBToolsController {
   }
 
   @Get("Tables")
-  async getTables(@Query('connectionId') connectionId: number =1 ) {
+  async getTables(@Query('connectionId') connectionId: number = 1) {
     try {
       const dbService = await this.getDBService(connectionId);
       const res = await dbService.tables();
@@ -163,9 +169,9 @@ export class DBToolsController {
   }
 
   @Post("SeedDatabase")
-  async seedDatabase(@Body() seedCounts: {[entityName: string]: number}, @Query('connectionId') connectionId: number = 1) {
+  async seedDatabase(@Body() seedCounts: { [entityName: string]: number }, @Query('connectionId') connectionId: number = 1) {
     try {
-      const availableSeedEntities = [  
+      const availableSeedEntities = [
         clientEntity,
         groupEntity,
         groupRoleEntity,
@@ -177,8 +183,8 @@ export class DBToolsController {
         tenantEntity,
         tenantUserEntity,
         userEntity];
-      
-      const chosenEntitiesToSeed = availableSeedEntities.filter(entity=>seedCounts[entity.name] && seedCounts[entity.name] > 0);
+
+      const chosenEntitiesToSeed = availableSeedEntities.filter(entity => seedCounts[entity.name] && seedCounts[entity.name] > 0);
       const dbService = await this.getDBService(connectionId);
       const dbSeeder = new DBSeeder(dbService);
 
@@ -186,7 +192,7 @@ export class DBToolsController {
       const res = await dbSeeder.seedDatabase(chosenEntitiesToSeed, seedCounts);
       return res;
     }
-    catch(err) {
+    catch (err) {
       console.log(err);
     }
   }
@@ -198,42 +204,57 @@ export class DBToolsController {
         console.error(`error: ${error.message}`);
         return;
       }
-    
+
       if (stderr) {
         console.error(`stderr: ${stderr}`);
         return;
       }
-    
+
       console.log(`stdout:\n${stdout}`);
     });
   }
 
-//   private replaceQueryVariablesWithQuestionMark(query: string): string {
-//     return query.replace(/@\w+/g, '?');
-// }
+  //   private replaceQueryVariablesWithQuestionMark(query: string): string {
+  //     return query.replace(/@\w+/g, '?');
+  // }
 
   private extractVariables(query: string): string[] {
     const matches = query.match(/@\w+/g);
     return matches ? matches.map(variable => variable.slice(1)) : [];
   }
 
+  private async runViewQuery(customViewId:number, paramValuesObj: any, connectionId: number)
+   {
+    const customView = await this.customViewRepo.findByPk(customViewId);
+    const paramVariables = this.extractVariables(customView.viewSql);
+    const paramsValueArray = paramVariables.map(variable => paramValuesObj[variable])
+    const dbService = await this.getDBService(connectionId);
+
+    const parseRes = this.sqlParserService.parseSelect(customView.viewSql);
+    const viewSql = customView.viewSql.replace(/@\w+/g, '?');
+    const viewData = await dbService.select(viewSql, paramsValueArray);
+
+    return viewData;
+
+  }
 
   @Post("RunCustomView")
   async customView(@Body() customViewInfo: any, @Query('connectionId') connectionId: number = 1) {
     try {
       const customViewId = customViewInfo.customViewId;
       const paramValuesObj = customViewInfo.params;
-      const customView = await this.customViewRepo.findByPk(customViewId);
-      const paramVariables = this.extractVariables(customView.viewSql);
-      const paramsValueArray = paramVariables.map(variable => paramValuesObj[variable])
-      //.map(x=>!isNaN(x - 0) ? Number(x) : x);
-      const dbService = await this.getDBService(connectionId);
+      const viewData = await this.runViewQuery(customViewId, paramValuesObj, connectionId);
+      return viewData
+      // const customView = await this.customViewRepo.findByPk(customViewId);
+      // const paramVariables = this.extractVariables(customView.viewSql);
+      // const paramsValueArray = paramVariables.map(variable => paramValuesObj[variable])
+      // const dbService = await this.getDBService(connectionId);
 
-      const parseRes = this.sqlParserService.parseSelect(customView.viewSql);
-      const viewSql = customView.viewSql.replace(/@\w+/g, '?');
-      const viewData = await dbService.select(viewSql, paramsValueArray);
+      // const parseRes = this.sqlParserService.parseSelect(customView.viewSql);
+      // const viewSql = customView.viewSql.replace(/@\w+/g, '?');
+      // const viewData = await dbService.select(viewSql, paramsValueArray);
 
-      return viewData;
+      // return viewData;
 
     } catch (err) {
       console.log(err);
@@ -241,6 +262,41 @@ export class DBToolsController {
 
     }
   }
+
+  @Post("RunDataReport")
+  @Header('content-type', 'text/html')
+  async dataReport(@Body() dataReportInfo: any, @Query('connectionId') connectionId: number = 1) {
+    try {
+      const dataReportId = dataReportInfo.dataReportId;
+      const reportParams = dataReportInfo.params.reportParams;
+      const viewParams = dataReportInfo.params.viewParams;
+      const dataReport = await this.dataReportRepo.findByPk(dataReportId);
+
+      const viewData = await this.runViewQuery(dataReport.customViewId, viewParams, connectionId);
+      const paramValuesObj = {
+        report: reportParams,
+        rows: viewData
+      }
+      const template = Handlebars.compile(dataReport.reportTemplate);
+      const report = template(paramValuesObj);
+
+      return report;
+
+    } catch (err) {
+      console.log(err);
+      throw new HttpException("Error running data report", 500);
+
+    }
+  }
+
+  //     res.setHeader('Content-Type', 'text/html');
+  //     res.send(report);
+  // }
 }
 
+
+// const data = {
+//   reportParams: this.selectedReportParamValues,
+//   viewParams: this.viewParamValues
+// }
 
