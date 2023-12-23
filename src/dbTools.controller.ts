@@ -1,4 +1,4 @@
-import { Controller, Body, Get, Inject, Post, Param, Query, UseGuards, HttpException, Header } from '@nestjs/common';
+import { Controller, Body, Get, Inject, Post, Param, Query, UseGuards, HttpException, Header, Response } from '@nestjs/common';
 import { DbExporter, ExportEntity } from './lib/dbExporter';
 import { DBImporter, } from './lib/dbImporter';
 import { IDBService } from './lib/dbService/dbService.interfaces';
@@ -13,6 +13,8 @@ import { DataReport, DATA_REPORT_REPOSITORY } from './data-report/data-report.en
 import { AuthGuard } from './nest-auth/auth.guard';
 import { SqlParserService } from './sql-parser/sql-parser.service';
 import Handlebars from 'handlebars';
+const pdf = require('html-pdf');
+const fs = require('fs');
 
 import {
   clientEntity,
@@ -263,6 +265,20 @@ export class DBToolsController {
     }
   }
 
+  private pdfFromHtml(htmlContent: string, fileName: string, res: any) {
+    try {
+      pdf.create(htmlContent).toStream(function(err, stream){
+        stream.pipe(fs.createWriteStream(fileName));
+      });
+      // pdf.create(htmlContent).toFile("/Users/kenpayson/Documents/htmlToPdf.pdf", (err, res) => {
+      //   if (err) return console.log(err);
+      //   console.log('PDF generated successfully:', res);
+      // });
+    } catch (error) {
+      console.error('Error fetching URL:', error);
+    }
+  }
+
   @Post("RunDataReport")
   @Header('content-type', 'text/html')
   async dataReport(@Body() dataReportInfo: any, @Query('connectionId') connectionId: number = 1) {
@@ -281,6 +297,33 @@ export class DBToolsController {
       const report = template(paramValuesObj);
 
       return report;
+
+    } catch (err) {
+      console.log(err);
+      throw new HttpException("Error running data report", 500);
+
+    }
+  }
+
+  @Post("RunDataReportPDF")
+  @Header('content-type', 'application/pdf')
+  async dataReportPDF(@Body() dataReportInfo: any, @Query('connectionId') connectionId: number = 1, @Response() res: any) {
+    try {
+      const dataReportId = dataReportInfo.dataReportId;
+      const reportParams = dataReportInfo.params.reportParams;
+      const viewParams = dataReportInfo.params.viewParams;
+      const dataReport = await this.dataReportRepo.findByPk(dataReportId);
+
+      const viewData = await this.runViewQuery(dataReport.customViewId, viewParams, connectionId);
+      const paramValuesObj = {
+        report: reportParams,
+        rows: viewData
+      }
+      const template = Handlebars.compile(dataReport.reportTemplate);
+      const report = template(paramValuesObj);
+      const fileName = dataReport.name.replace(/\s+/g, '_') + '.pdf';
+      this.pdfFromHtml(report, fileName , res);
+
 
     } catch (err) {
       console.log(err);
