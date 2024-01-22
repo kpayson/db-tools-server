@@ -25,7 +25,10 @@ export class CustomViewController {
 
     @Get()
     async findAll() {
-        const res = await this.customView.findAll({ include: [{ model: CustomViewParameter, as: 'parameters' }] });
+        const res = await this.customView.findAll({ 
+            include: [{ model: CustomViewParameter, as: 'parameters'}],
+            order: [[{ model: CustomViewParameter, as: 'parameters' }, 'id', 'ASC']] 
+        });
         return res;
     }
 

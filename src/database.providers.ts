@@ -8,6 +8,7 @@ import { CustomView } from './custom-view/custom-view.entity';
 import { CustomViewParameter } from './custom-view/custom-view-parameter.entity';
 import { DataReport } from './data-report/data-report.entity';
 import { DataReportParameter } from './data-report/data-report-parameter.entity';
+import {DataReportRunResult} from './data-report-run-result/data-report-run-result.entity';
 import * as config from 'config';
 import { PoolConfig } from 'config/config-types';
 
@@ -38,6 +39,7 @@ export const databaseProviders = [
         CustomView,
         CustomViewParameter,
         DataReport,
+        DataReportRunResult,
         DataReportParameter]);
       await sequelize.sync({ force: false,   });
       return sequelize;

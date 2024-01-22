@@ -7,10 +7,12 @@ import { PerfTestService } from './perf-test/perf-test-runner.service';
 import { DatabaseModule } from './database.module';
 import { DatabaseConnectionController } from './database-connection/database-connection.controller';
 import { CustomViewController } from './custom-view/custom-view.controller';
-import { DataReportController } from './data-report/data-report.controller';
+
 import { PerfTestResultController } from './perf-test/perf-test.controller';
 import { CommandTemplatesController } from './command-template/command-template.controller';
 import { CommandRunResultsController } from './command-run-result/command-run-results.controller';
+import { DataReportController } from './data-report/data-report.controller';
+import { DataReportRunResultsController } from './data-report-run-result/data-report-run-result.controller';
 
 
 import { DATABASE_CONNECTION_REPOSITORY, DatabaseConnection } from './database-connection/database-connection.entity';
@@ -20,6 +22,7 @@ import { COMMAND_TEMPLATE_REPOSITORY,CommandTemplate } from './command-template/
 import { COMMAND_TEMPLATE_PARAMETER_REPOSITORY, CommandTemplateParameter} from './command-template/command-template-parameter.entity';
 import  { DATA_REPORT_REPOSITORY, DataReport } from './data-report/data-report.entity';
 import { DATA_REPORT_PARAMETER_REPOSITORY, DataReportParameter } from './data-report/data-report-parameter.entity';
+import { DATA_REPORT_RUN_RESULT_REPOSITORY, DataReportRunResult } from './data-report-run-result/data-report-run-result.entity';
 
 import { PerfTestResultProviders } from './perf-test/perf-test-result.providers';
 import { COMMAND_RUN_RESULT_REPOSITORY,CommandRunResult } from './command-run-result/command-run-result.entity';
@@ -29,6 +32,7 @@ import { COMMAND_RUN_RESULT_REPOSITORY,CommandRunResult } from './command-run-re
 import { SETTING_OPTIONS } from './common/shared/constants';
 import { JwtService } from '@nestjs/jwt';
 import { SqlParserService } from './sql-parser/sql-parser.service';
+// import { CacheModule } from '@nestjs/cache-manager';
 
 
 
@@ -45,7 +49,8 @@ import { SqlParserService } from './sql-parser/sql-parser.service';
 // const idTokenUrl = config.get<string>("auth.idTokenUrl");
 @Module({
   imports: [
-    DatabaseModule,     
+    DatabaseModule,  
+    // CacheModule.register(),   
     // AuthApiModule.forRoot({
     //   scope: '',
     //   audience: audience,
@@ -65,6 +70,7 @@ import { SqlParserService } from './sql-parser/sql-parser.service';
     PerfTestResultController, 
     CommandTemplatesController,
     CommandRunResultsController,
+    DataReportRunResultsController,
     DataReportController  ],
   providers: [
     AppGateway,
@@ -79,6 +85,7 @@ import { SqlParserService } from './sql-parser/sql-parser.service';
     {provide:COMMAND_RUN_RESULT_REPOSITORY, useValue: CommandRunResult},
     {provide:DATA_REPORT_REPOSITORY, useValue: DataReport},
     {provide:DATA_REPORT_PARAMETER_REPOSITORY, useValue: DataReportParameter},
+    {provide:DATA_REPORT_RUN_RESULT_REPOSITORY, useValue:DataReportRunResult},
     ...PerfTestResultProviders,
     PerfTestService,
     JwtService,

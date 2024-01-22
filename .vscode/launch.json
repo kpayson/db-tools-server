@@ -38,6 +38,21 @@
 
           },
 
+
+        {
+          "type": "node",
+          "request": "launch",
+          "name": "Debug dbTools Server no build",
+          "program": "${workspaceFolder}/src/main.ts",
+          "outFiles": [
+            "${workspaceFolder}/**/*.js"
+          ],
+          "sourceMaps": true,
+          "smartStep": true,
+          "trace": true,
+
+        },
+
           {
             "name": "Debug Sequelize Migration",
             "type": "node",

@@ -23,10 +23,10 @@ export class DataReportParameter extends Model {
     })
     name: string;
 
-    // @Column({
-    //     type: DataType.STRING,
-    // })
-    // dataType: string;
+    @Column({
+        type: DataType.STRING,
+    })
+    dataType: string;
 
     @Column({
         type: DataType.STRING,

@@ -73,5 +73,83 @@
         }
       ]
     }
+  ],
+  "customViews": [
+    {
+      "name": "Login Event Usage By Tenant",
+      "description": "For each tenant show the number of login events between a given date range",
+      "viewSqlLines":[
+        "Select t.tenantId, Count(*) as cnt",
+        "From LoginEvent le inner join Tenant t on t.id = le.tenantId", 
+        "Where", 
+        " le.eventType = 'login' and",
+        " le.createdOn between @startDate and @endDate",
+        "Group By t.tenantId"
+      ],
+      "parameters": [
+        {
+          "name": "startDate",
+          "dataType": "date",
+          "defaultValue": ""
+        },
+        {
+          "name": "endDate",
+          "dataType": "date",
+          "defaultValue": ""
+        }
+      ]
+    }, 
+    {
+      "name": "Unique Logins by Tenant",
+      "description": "find the number of unique user logins for each tenant",
+      "viewSqlLines":[
+        "Select t.tenantId, Count(Distinct(le.userId)) as cnt",
+        "From LoginEvent le inner join Tenant t on t.id = le.tenantId", 
+        "Where", 
+          "le.eventType = 'login' and",
+          "le.createdOn between @startDate and @endDate",
+        "Group By t.tenantId"
+      ],
+      "parameters": [
+        {
+          "name": "startDate",
+          "dataType": "date",
+          "defaultValue": ""
+        },
+        {
+          "name": "endDate",
+          "dataType": "date",
+          "defaultValue": ""
+        }
+      ] 
+    }
+  ],
+  "dataReports":[
+    {
+      "name": "Usage By Tenant Report",
+      "description": "Show the count of login events for each tenant",
+      "customViewId":1,
+      "reportTemplate":[
+        "start date: {{localDateString view.startDate}} <br>",
+        "end date: {{localDateString view.endDate}} <br>",
+        "\n",
+        "<b>Usage Numbers</b>",
+        "{{#each rows}}",
+        "<div>{{tenantId}}: {{cnt}} </div>",
+        "{{/each}}",
+        "\n",
+        "<br><br>",
+        "\n",
+        "{{report.note}}"
+      ],
+      "parameters": [
+        {
+          "name": "note",
+          "dataType": "string",
+          "defaultValue": ""
+        }
+      ]
+    }
+
   ]
 }

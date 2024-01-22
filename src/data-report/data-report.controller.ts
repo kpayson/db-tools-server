@@ -3,7 +3,6 @@ import { DataReport, DATA_REPORT_REPOSITORY } from './data-report.entity';
 import { DataReportParameter } from './data-report-parameter.entity';
 import { Inject } from '@nestjs/common';
 
-
 @Controller('data-reports')
 export class DataReportController {
     constructor(
@@ -12,7 +11,7 @@ export class DataReportController {
 
     @Post()
     async create(@Body() dataReport: DataReport): Promise<DataReport> {
-        const res = await this. dataReport.create({
+        const res = await this.dataReport.create({
             name: dataReport.name,
             description: dataReport.description,
             reportTemplate: dataReport.reportTemplate,
@@ -70,4 +69,6 @@ export class DataReportController {
         const res = await this.dataReport.destroy({ where: { id } });
         return res;
     }
+
+
 }

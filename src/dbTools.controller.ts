@@ -13,6 +13,9 @@ import { DataReport, DATA_REPORT_REPOSITORY } from './data-report/data-report.en
 import { AuthGuard } from './nest-auth/auth.guard';
 import { SqlParserService } from './sql-parser/sql-parser.service';
 import Handlebars from 'handlebars';
+//import {CACHE_MANAGER, Cache} from '@nestjs/cache-manager';
+import { v4 as uuidv4 } from 'uuid';
+
 const pdf = require('html-pdf');
 const fs = require('fs');
 
@@ -38,6 +41,14 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
+interface Email {
+  to: string;
+  subject: string;
+  body: string;
+  attachment: string;
+}
+
+
 // @ApiBearerAuth()
 @ApiTags('dbTools')
 @Controller('dbTools')
@@ -45,6 +56,8 @@ export class DBToolsController {
   constructor(
     @Inject(DATABASE_CONNECTION_REPOSITORY)
     private readonly connectionRepo: typeof DatabaseConnection,
+
+    // @Inject(CACHE_MANAGER) private cacheManager: Cache,
 
     @Inject(CUSTOM_VIEW_REPOSITORY)
     private readonly customViewRepo: typeof CustomView,
@@ -291,12 +304,19 @@ export class DBToolsController {
       const viewData = await this.runViewQuery(dataReport.customViewId, viewParams, connectionId);
       const paramValuesObj = {
         report: reportParams,
+        view: viewParams,
         rows: viewData
       }
+      Handlebars.registerHelper('localDateString', function (aString) {
+        return new Date(aString).toLocaleDateString();
+      })
+      const foo = new Date().toLocaleDateString()
       const template = Handlebars.compile(dataReport.reportTemplate);
       const report = template(paramValuesObj);
 
-      return report;
+      const reportCacheKey = uuidv4();
+      // this.cacheManager.set(reportCacheKey, report, 3600); // cache for 1 hour
+      return {key:reportCacheKey, report:report};
 
     } catch (err) {
       console.log(err);
@@ -332,14 +352,9 @@ export class DBToolsController {
     }
   }
 
-  //     res.setHeader('Content-Type', 'text/html');
-  //     res.send(report);
-  // }
+  @Post("EmailDataReport")
+  async emailDataReport() {
+  // TODO
+  }
+
 }
-
-
-// const data = {
-//   reportParams: this.selectedReportParamValues,
-//   viewParams: this.viewParamValues
-// }
-

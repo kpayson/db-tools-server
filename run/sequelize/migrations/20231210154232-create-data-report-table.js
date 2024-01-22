@@ -23,7 +23,7 @@ module.exports = {
       },
 
       reportTemplate: {
-        type: DataType.STRING,
+        type: DataType.STRING(4000),
         allowNull: false,
       },
 

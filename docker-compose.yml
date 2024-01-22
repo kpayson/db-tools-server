@@ -27,5 +27,16 @@ services:
       DB_USER: root
       # DB_PASSWORD: password
 
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog-dbTools
+    restart: always
+    logging:
+      # disable saving logs
+      driver: 'none'
+    ports:
+      - 1035:1025 # smtp server
+      - 8035:8025 # web ui
+
 
 

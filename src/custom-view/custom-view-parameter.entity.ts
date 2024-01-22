@@ -32,6 +32,5 @@ export class CustomViewParameter extends Model {
         type: DataType.STRING,
     })
     defaultValue: string;
-    
 
 }
