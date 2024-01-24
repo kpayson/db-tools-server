@@ -1,17 +1,21 @@
 'use strict';
 
 const seedData = require('../seed-data.json');
+const fs = require('fs');
+const path = require('path');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
 
     for(const report of seedData.dataReports) {
+      const filePath = path.join(__dirname, '../seed-data-report-templates/' + report.seedDataTemplateFile);
+      const reportTemplate = fs.readFileSync(filePath, 'utf8');
 
       const r = {
         name: report.name,
         description: report.description,
-        reportTemplate: report.reportTemplate.join('\n'),
+        reportTemplate: reportTemplate,
         customViewId: report.customViewId,
       };
 

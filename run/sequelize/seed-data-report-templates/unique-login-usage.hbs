@@ -1,0 +1,50 @@
+<style>
+    table {
+      border-collapse: collapse;
+      border: 1px solid #ddd;
+      border-spacing: 0;
+      width:100%;
+    }
+    
+    th, td {
+      text-align: left;
+      border: 1px solid #ddd;
+      padding:8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    
+    .report-note {
+        border: 1px solid gray;
+        padding:20px;
+        margin-top:20px;
+    }
+</style>
+
+<h2>Unique Logins per Tenant {{localDateString view.startDate}} - {{localDateString view.endDate}}</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Tenant</th>
+            <th>Login Count</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{#each rows}}
+    <tr>
+        <td>{{tenantId}}</td>
+        <td>{{cnt}}</td>
+    </tr>
+    {{/each}}
+    </tbody>
+</table>
+
+
+<div class="report-note">
+    {{report.note}}
+</div>
+
+

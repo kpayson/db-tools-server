@@ -21,6 +21,10 @@ COPY migrations/ ./migrations/
 
 COPY ./seeders ./seeders
 
+COPY ./seed-custom-view-queries ./seed-custom-view-queries
+
+COPY ./seed-data-report-templates ./seed-data-report-templates
+
 COPY ./seed-data.json ./seed-data.json
 
 # Copy the wait-for-it.sh script to the container
